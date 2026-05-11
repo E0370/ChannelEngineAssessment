@@ -1,8 +1,131 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    Layout = null;
 }
+@model List<EngineLibrary.ProductResult>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Top 5 Products</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .main-title {
+            font-size: 32px;
+            color: #4f46e5;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #888;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #f8f9ff;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            user-select: none;
+        }
+        th:hover {
+            background: #eef0ff;
+        }
+        td {
+            padding: 14px 16px;
+            border-top: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #333;
+        }
+        tr:hover td {
+            background: #fafbff;
+        }
+        .gold {
+            background: #fffbea;
+        }
+        .gold td {
+            font-weight: 600;
+        }
+        .badge {
+            background: #f59e0b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">Welcome to ChannelEngine Assessment</h1>
+        <h1>Top 5 Products</h1>
+        <p class="subtitle">Based on IN_PROGRESS orders from ChannelEngine</p>
+
+        <table id="productTable">
+            <tr>
+                <th onclick="sortTable(0)">Product Name </th>
+                <th onclick="sortTable(1)">GTIN </th>
+                <th onclick="sortTable(2)">Total Quantity </th>
+            </tr>
+         
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr class="@(i == 0 ? "gold" : "")">
+                    <td>
+                        @Model[i].ProductName
+                        @if (i == 0) { }
+                    </td>
+                    <td>@Model[i].Gtin</td>
+                    <td>@Model[i].TotalQuantity</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <!-- JS sorting function for the table columns -->
+    <script>
+        function sortTable(col) {
+            var table = document.getElementById("productTable");
+            var rows = Array.from(table.rows).slice(1);
+            var asc = table.dataset.sort != col || table.dataset.dir == "desc";
+            rows.sort((a, b) => {
+                var x = a.cells[col].innerText;
+                var y = b.cells[col].innerText;
+                return asc ? x.localeCompare(y, undefined, {numeric: true})
+                           : y.localeCompare(x, undefined, {numeric: true});
+            });
+            rows.forEach(r => table.appendChild(r));
+            table.dataset.sort = col;
+            table.dataset.dir = asc ? "asc" : "desc";
+        }
+    </script>
+</body>
+</html>
