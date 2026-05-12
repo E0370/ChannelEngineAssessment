@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace EngineLibrary
 {
-    public class ProductResult
+    public class StockUpdate
     {
-        public string ProductName { get; set; }
-        public string Gtin { get; set; }
-        public int TotalQuantity { get; set; }
         public string MerchantProductNo { get; set; }
+        public int Stock { get; set; }
     }
 }

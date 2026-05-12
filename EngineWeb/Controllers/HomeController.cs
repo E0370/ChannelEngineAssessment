@@ -8,8 +8,13 @@ namespace EngineWeb.Controllers
         {
             var httpClient = new HttpClient();
             var orderService = new OrderService(httpClient);
+
             var orders = await orderService.GetInProgressOrders();
             var topfive = orderService.GetTopFiveProducts(orders);
+
+            var updateProductStock = topfive.First();
+            await orderService.UpdateStock(updateProductStock.MerchantProductNo);
+
             return View(topfive);
         }
     }
