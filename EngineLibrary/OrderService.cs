@@ -46,7 +46,8 @@ namespace EngineLibrary
                             Gtin = item.Gtin,
                             ProductName = item.Description,
                             TotalQuantity = item.Quantity,
-                            MerchantProductNo = item.MerchantProductNo
+                            MerchantProductNo = item.MerchantProductNo,
+                            StockLocationId = item.StockLocation.Id
                         };
                     }
                 }
@@ -55,7 +56,7 @@ namespace EngineLibrary
         }
 
         // This method updates the stock for a specific product.
-        public async Task UpdateStock(string merchantProductNo) 
+        public async Task UpdateStock(string merchantProductNo, int stockLocationId) 
         {
             var url = $"{BaseUrl}/offer/stock?apiKey={ApiKey}";
             var stockUpdate = new List<StockUpdate>
@@ -63,13 +64,21 @@ namespace EngineLibrary
                 new StockUpdate
                 {
                     MerchantProductNo = merchantProductNo,
-                    Stock = 25
+                    StockLocations = new List<StockLocationUpdate>
+                    {
+                        new StockLocationUpdate
+                        {
+                            Stock = 25,
+                            StockLocationId = stockLocationId
+                        }
+                    }
                 }
             };
 
             var json = JsonSerializer.Serialize(stockUpdate);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync(url, content);
+            await _httpClient.PutAsync(url, content);
+           
         }
     }
 }

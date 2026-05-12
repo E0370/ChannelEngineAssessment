@@ -13,7 +13,7 @@ namespace EngineWeb.Controllers
             var topfive = orderService.GetTopFiveProducts(orders);
 
             var updateProductStock = topfive.First();
-            await orderService.UpdateStock(updateProductStock.MerchantProductNo);
+            await orderService.UpdateStock(updateProductStock.MerchantProductNo, updateProductStock.StockLocationId);
 
             return View(topfive);
         }

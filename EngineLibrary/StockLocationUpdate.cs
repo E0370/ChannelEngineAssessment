@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EngineLibrary
 {
-    public class StockUpdate
+    public class StockLocationUpdate
     {
-        public string MerchantProductNo { get; set; }
-        public List<StockLocationUpdate> StockLocations { get; set; }
+        public int Stock {  get; set; }
+        public int StockLocationId { get; set; }
     }
 }

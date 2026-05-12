@@ -12,5 +12,5 @@ foreach (var product in topfive)
 }
 // Update the stock for the top product to 25
 var updateProductStock = topfive.First();
-await orderService.UpdateStock(updateProductStock.MerchantProductNo);
+await orderService.UpdateStock(updateProductStock.MerchantProductNo, updateProductStock.StockLocationId);
 Console.WriteLine($"Stock updated to 25 for {updateProductStock.ProductName}");

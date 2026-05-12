@@ -12,5 +12,6 @@ namespace EngineLibrary
         public string Gtin { get; set; }
         public int TotalQuantity { get; set; }
         public string MerchantProductNo { get; set; }
+        public int StockLocationId { get; set; }
     }
 }
